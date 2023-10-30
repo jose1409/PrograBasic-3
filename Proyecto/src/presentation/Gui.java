@@ -1,8 +1,5 @@
 package presentation;
 
-import domain.Atracciones;
-import domain.Empleados;
-import domain.Clientes;
 import javax.swing.JOptionPane;
 
 public class Gui {

@@ -6,7 +6,7 @@ import data.Logic;
 public class Menu {
 
     //Inicializacion de variables
-    int option;
+    String option;
     Gui gui;
     Logic logic;
 
@@ -14,7 +14,7 @@ public class Menu {
     public Menu() {
         gui = new Gui();
         logic = new Logic();
-        option = 0;
+        option = "";
         start();
     }
 
@@ -22,17 +22,19 @@ public class Menu {
     public void start() {
         boolean test = true;
         while (test) {
-            option = Integer.parseInt(gui.input("Menu de prueba\n"
-                    + "1. Agregar Usuario\n"
-                    + "2. Agregar Empleado\n"
-                    + "3. Agregar Atraccion\n"
-                    + "4.Consultar Usuario\n"
-                    + "5.Consultar Empleado\n"
-                    + "6.Consultar Atraccion"));
+            option = gui.input(
+                    "Bienvenido al Parque de Atracciones\n"
+                    + "1. Clientes\n"
+                    + "2. Empleados\n"
+                    + "3. Atracciones\n"
+                    + "4. Facturas\n"
+                    + "5. Salir\n"
+            );
             if (logic.verifyInt(option)) {
-                switch (option) {
+                int option2 = Integer.parseInt(option);
+                switch (option2) {
                     case 1:
-                        gui.print("hola");
+                        subClientes();
                         break;
                     case 2:
                         break;
@@ -41,17 +43,52 @@ public class Menu {
                     case 4:
                         break;
                     case 5:
+                        gui.print("Gracias por preferirnos, vuelva pronto");
+                        test = false;
                         break;
                     case 6:
                         break;
                     default:
-                        gui.print("Error: Digita un numero de los anteriores");
+                        gui.print("Error: Digita un numero del 1 al 5");
                 }
 
             } else {
-                gui.print("Error: Tiene que digitar un numero");
+                gui.print("Error: Tiene que digitar un numero valido");
             }
 
         }
     }
+
+    //Submenu Clientes
+    public void subClientes() {
+        boolean test = true;
+        while (test) {
+            option = gui.input("¿Que desea realizar?" 
+                    + "\n1. Agregar"
+                    + "\n2. Consultar"
+                    + "\n3. Inactivar"
+                    + "\n4. Volver al Menu"
+            );
+            if (logic.verifyInt(option)) {
+                int option2 = Integer.parseInt(option);
+                switch (option2) {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        test = false;
+                        break;
+                    default:
+                        gui.print("Error: Digita un numero del 1 al 4");
+
+                }
+            } else {
+                gui.print("Error: Tiene que digitar un numero valido");
+            }
+        }
+    }
 }
+
