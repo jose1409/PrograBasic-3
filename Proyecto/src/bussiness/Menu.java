@@ -2,6 +2,7 @@ package bussiness;
 
 import presentation.Gui;
 import data.Logic;
+import domain.Clientes;
 
 public class Menu {
 
@@ -9,6 +10,7 @@ public class Menu {
     String option;
     Gui gui;
     Logic logic;
+    Clientes ac= new Clientes();
 
     //Constructor
     public Menu() {
@@ -73,10 +75,13 @@ public class Menu {
                 int option2 = Integer.parseInt(option);
                 switch (option2) {
                     case 1:
+                        ac.agregarClientes();
                         break;
                     case 2:
+                        ac.mostrar();
                         break;
                     case 3:
+                        ac.inactivar();
                         break;
                     case 4:
                         test = false;
