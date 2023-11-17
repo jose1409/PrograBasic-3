@@ -101,10 +101,30 @@ public class Clientes {
     }
 
     public void mostrar() {
-        int i;
         String s = "Total de Clientes:";
-        for (i = 0; i < listaClientes.length; i++) {
+        for (byte i = 0; i < listaClientes.length; i++) {
             if (listaClientes[i] != null) {
+                String estado;
+                if (listaClientes[i].isEstado()) {
+                    estado = "Activo";
+                } else {
+                    estado = "Inactivo";
+                }
+                s += "\nId: #" + listaClientes[i].getId()
+                        + "\nNombre Completo: " + listaClientes[i].getNombre() + " " + listaClientes[i].apellido
+                        + "\nUsuario: " + listaClientes[i].getUsuario()
+                        + "\nContraseña: " + listaClientes[i].getContraseña()
+                        + "\nEstado: " + estado + "\n";
+
+            }
+        }
+        gui.print(s);
+    }
+
+    public void mostrarActivos() {
+        String s = "Total de Clientes:";
+        for (byte i = 0; i < listaClientes.length; i++) {
+            if (listaClientes[i] != null && listaClientes[i].isEstado()) {
                 s += "\nId: #" + listaClientes[i].getId()
                         + "\nNombre Completo: " + listaClientes[i].getNombre() + " " + listaClientes[i].apellido
                         + "\nUsuario: " + listaClientes[i].getUsuario()
@@ -114,11 +134,10 @@ public class Clientes {
         gui.print(s);
     }
 
-    public void mostrarActivos() {
-        int i;
+    public void mostrarInactivos() {
         String s = "Total de Clientes:";
-        for (i = 0; i < listaClientes.length; i++) {
-            if (listaClientes[i] != null && listaClientes[i].isEstado()) {
+        for (byte i = 0; i < listaClientes.length; i++) {
+            if (listaClientes[i] != null && listaClientes[i].isEstado() == false) {
                 s += "\nId: #" + listaClientes[i].getId()
                         + "\nNombre Completo: " + listaClientes[i].getNombre() + " " + listaClientes[i].apellido
                         + "\nUsuario: " + listaClientes[i].getUsuario()
@@ -131,8 +150,8 @@ public class Clientes {
     public void inactivar() {
         gui.print("Aqui se mostraran los usuarios activos: Por favor digite el usuario que desea inactivar\n");
         mostrarActivos();
-        byte opcion = Byte.parseByte(gui.input("Seleccione el ID:"));
-        int i;
+        byte opcion = Byte.parseByte(gui.input("Seleccione el ID: "));
+        byte i;
         for (i = 0; i < listaClientes.length; i++) {
             if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
                 listaClientes[i].setEstado(false);
@@ -146,5 +165,24 @@ public class Clientes {
             gui.print("Usuario con ID " + opcion + " no encontrado");
         }
 
+    }
+
+    public void activar() {
+        gui.print("Aqui se mostraran los usuarios Inactivos: Por favor digite el usuario que desea inactivar\n");
+        mostrarInactivos();
+        byte opcion = Byte.parseByte(gui.input("Seleccione el ID: "));
+        byte i;
+        for (i = 0; i < listaClientes.length; i++) {
+            if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
+                listaClientes[i].setEstado(true);
+                gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Activado con éxito");
+                break; // Sale del bucle ya que se encontró y modificó el usuario
+            }
+        }
+
+        if (i == listaClientes.length) {
+            // Si el bucle se ejecutó completamente y no se encontró el usuario
+            gui.print("Usuario con ID " + opcion + " no encontrado");
+        }
     }
 }

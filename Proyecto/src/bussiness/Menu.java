@@ -10,7 +10,7 @@ public class Menu {
     String option;
     Gui gui;
     Logic logic;
-    Clientes ac= new Clientes();
+    Clientes ac = new Clientes();
 
     //Constructor
     public Menu() {
@@ -65,11 +65,12 @@ public class Menu {
     public void subClientes() {
         boolean test = true;
         while (test) {
-            option = gui.input("¿Que desea realizar?" 
+            option = gui.input("¿Que desea realizar?"
                     + "\n1. Agregar"
                     + "\n2. Consultar"
                     + "\n3. Inactivar"
-                    + "\n4. Volver al Menu"
+                    + "\n4. Activar"
+                    + "\n5. Volver al Menu"
             );
             if (logic.verifyInt(option)) {
                 int option2 = Integer.parseInt(option);
@@ -84,6 +85,9 @@ public class Menu {
                         ac.inactivar();
                         break;
                     case 4:
+                        ac.activar();
+                        break;
+                    case 5:
                         test = false;
                         break;
                     default:
@@ -96,4 +100,3 @@ public class Menu {
         }
     }
 }
-
