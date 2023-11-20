@@ -121,7 +121,8 @@ public class Clientes {
         }
         gui.print(s);
     }
-
+    
+    //Funcion conjunta con activar, muestra todos los clientes que se encuentran activos.
     public void mostrarActivos() {
         String s = "Total de Clientes:";
         for (byte i = 0; i < listaClientes.length; i++) {
@@ -134,7 +135,8 @@ public class Clientes {
         }
         gui.print(s);
     }
-
+    
+    //Funcion conjunta con Inactivar, muestra todos los clientes que se encuentran inactivos
     public void mostrarInactivos() {
         String s = "Total de Clientes:";
         for (byte i = 0; i < listaClientes.length; i++) {
@@ -147,7 +149,8 @@ public class Clientes {
         }
         gui.print(s);
     }
-
+    
+    //Funcion Inactivar, sirve para inactivar usuarios 
     public void inactivar() {
         gui.print("Aqui se mostraran los usuarios activos: Por favor digite el usuario que desea inactivar\n");
         mostrarActivos();
@@ -172,7 +175,8 @@ public class Clientes {
         }
 
     }
-
+    
+    //Funcion activar, los usuarios que se hayan inactivado se podran volver a activar con esta funcion
     public void activar() {
         //Verificar si ya estan todos activos
         gui.print("Aqui se mostraran los usuarios Inactivos: Por favor digite el usuario que desea inactivar\n");
