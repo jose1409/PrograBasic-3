@@ -3,7 +3,8 @@ package domain;
 import presentation.Gui;
 
 public class Clientes {
-
+    
+    //Inicializacion de Variables
     private byte id;
     private String nombre;
     private String apellido;
@@ -12,7 +13,8 @@ public class Clientes {
     private boolean estado;
     private Clientes listaClientes[] = new Clientes[10];
     Gui gui;
-
+    
+    //Constructor
     public Clientes() {
         this.nombre = "";
         this.apellido = "";
@@ -70,11 +72,13 @@ public class Clientes {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-
+    
+    //Funcion conjunta para agregar clientes
     public void agregarClientes() {
         fullList(listaClientes);
     }
-
+    
+    //Funcion conjunta para agregar clientes
     public boolean fullList(Clientes clientes[]) {
         boolean test = false;
         for (int i = 0; i < clientes.length; i++) {
@@ -99,17 +103,14 @@ public class Clientes {
         }
         return test;
     }
-
+    
+    //Funcion para mostrar todos los clientes existentes
     public void mostrar() {
         String s = "Total de Clientes:";
         for (byte i = 0; i < listaClientes.length; i++) {
             if (listaClientes[i] != null) {
                 String estado;
-                if (listaClientes[i].isEstado()) {
-                    estado = "Activo";
-                } else {
-                    estado = "Inactivo";
-                }
+                if (listaClientes[i].isEstado()) {estado = "Activo";} else {estado = "Inactivo";}
                 s += "\nId: #" + listaClientes[i].getId()
                         + "\nNombre Completo: " + listaClientes[i].getNombre() + " " + listaClientes[i].apellido
                         + "\nUsuario: " + listaClientes[i].getUsuario()
@@ -154,9 +155,14 @@ public class Clientes {
         byte i;
         for (i = 0; i < listaClientes.length; i++) {
             if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
-                listaClientes[i].setEstado(false);
-                gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Inactivado con éxito");
-                break; // Sale del bucle ya que se encontró y modificó el usuario
+                if (listaClientes[i].isEstado() == false) {
+                    gui.print("Error: El usuario ya esta Inactivo, volviendo al Submenu");
+                    break;
+                } else {
+                    listaClientes[i].setEstado(false);
+                    gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Inactivado con éxito");
+                    break; // Sale del bucle ya que se encontró y modificó el usuario
+                }
             }
         }
 
@@ -168,15 +174,21 @@ public class Clientes {
     }
 
     public void activar() {
+        //Verificar si ya estan todos activos
         gui.print("Aqui se mostraran los usuarios Inactivos: Por favor digite el usuario que desea inactivar\n");
         mostrarInactivos();
         byte opcion = Byte.parseByte(gui.input("Seleccione el ID: "));
         byte i;
         for (i = 0; i < listaClientes.length; i++) {
             if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
-                listaClientes[i].setEstado(true);
-                gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Activado con éxito");
-                break; // Sale del bucle ya que se encontró y modificó el usuario
+                if (listaClientes[i].isEstado()) {
+                    gui.print("Error: El usuario ya esta activado, volviendo al Submenu");
+                    break;
+                } else {
+                    listaClientes[i].setEstado(true);
+                    gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Activado con éxito");
+                    break; // Sale del bucle ya que se encontró y modificó el usuario
+                }
             }
         }
 

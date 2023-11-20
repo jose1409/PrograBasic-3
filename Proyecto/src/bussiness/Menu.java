@@ -48,8 +48,6 @@ public class Menu {
                         gui.print("Gracias por preferirnos, vuelva pronto");
                         test = false;
                         break;
-                    case 6:
-                        break;
                     default:
                         gui.print("Error: Digita un numero del 1 al 5");
                 }
