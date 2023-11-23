@@ -3,6 +3,7 @@ package bussiness;
 import presentation.Gui;
 import data.Logic;
 import domain.Clientes;
+import domain.Empleados;
 
 public class Menu {
 
@@ -11,6 +12,7 @@ public class Menu {
     Gui gui;
     Logic logic;
     Clientes ac = new Clientes();
+    Empleados Em=new Empleados();
 
     //Constructor
     public Menu() {
@@ -39,6 +41,7 @@ public class Menu {
                         subClientes();
                         break;
                     case 2:
+                        subEmpleados();
                         break;
                     case 3:
                         break;
@@ -97,4 +100,41 @@ public class Menu {
             }
         }
     }
+    public void subEmpleados() {
+    boolean test = true;
+    while (test) {
+        option = gui.input("¿Qué desea realizar?"
+                + "\n1. Agregar Empleado"
+                + "\n2. Mostrar Empleados"
+                + "\n3. Inactivar Empleado"
+                + "\n4. Activar Empleado"
+                + "\n5. Volver al Menú Principal"
+        );
+        if (logic.verifyInt(option)) {
+            int option2 = Integer.parseInt(option);
+            switch (option2) {
+                case 1:
+                    Em.agregarEmpleado();
+                    break;
+                case 2:
+                    Em.mostrarActivos();
+                    break;
+                case 3:
+                    Em.inactivar();
+                    break;
+                case 4:
+                    Em.activar();
+                    break;
+                case 5:
+                    test = false;
+                    break;
+                default:
+                    gui.print("Error: Digite un número del 1 al 5");
+            }
+        } else {
+            gui.print("Error: Tiene que digitar un número válido");
+        }
+    }
+}
+
 }
