@@ -12,7 +12,7 @@ public class Menu {
     Gui gui;
     Logic logic;
     Clientes ac = new Clientes();
-    Empleados Em=new Empleados();
+    Empleados Em = new Empleados();
 
     //Constructor
     public Menu() {
@@ -100,6 +100,7 @@ public class Menu {
             }
         }
     }
+    
     public void subEmpleados() {
     boolean test = true;
     while (test) {

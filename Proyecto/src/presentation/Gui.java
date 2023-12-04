@@ -8,8 +8,8 @@ public class Gui {
         JOptionPane.showMessageDialog(null, tex);
     }
 
-    public String input(String tex){
-        return JOptionPane.showInputDialog(null,tex);
+    public String input(String tex) {
+        return JOptionPane.showInputDialog(null, tex);
     }
 
 }
