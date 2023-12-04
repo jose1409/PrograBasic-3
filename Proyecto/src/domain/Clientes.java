@@ -1,5 +1,6 @@
 package domain;
 
+import data.Logic;
 import presentation.Gui;
 
 public class Clientes {
@@ -165,26 +166,29 @@ public class Clientes {
         if (mostrarActivos().isEmpty()) {
             gui.print("No existen usuarios Activos, volviendo al SubMenu");
         } else {
-            gui.print("Por favor digite el usuario que desea inactivar\n" 
-                    + mostrarActivos());
-            byte opcion = Byte.parseByte(gui.input("Seleccione el ID: "));
             byte i;
-            for (i = 0; i < listaClientes.length; i++) {
-                if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
-                    if (listaClientes[i].isEstado() == false) {
-                        gui.print("Error: El usuario ya esta Inactivo, volviendo al Submenu");
-                        break;
-                    } else {
-                        listaClientes[i].setEstado(false);
-                        gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Inactivado con éxito");
-                        break; // Sale del bucle ya que se encontró y modificó el usuario
+            try {
+                int opcion = Integer.parseInt(gui.input("Seleccion el ID del usuario que desea activar\n"
+                        + mostrarActivos()));
+                for (i = 0; i < listaClientes.length; i++) {
+                    if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
+                        if (listaClientes[i].isEstado() == false) {
+                            gui.print("Error: El usuario ya esta Inactivo, volviendo al Submenu");
+                            break;
+                        } else {
+                            listaClientes[i].setEstado(false);
+                            gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Inactivado con éxito");
+                            break; // Sale del bucle ya que se encontró y modificó el usuario
+                        }
                     }
                 }
-            }
 
-            if (i == listaClientes.length) {
-                // Si el bucle se ejecutó completamente y no se encontró el usuario
-                gui.print("Usuario con ID " + opcion + " no encontrado, volviendo al Submenu");
+                if (i == listaClientes.length) {
+                    // Si el bucle se ejecutó completamente y no se encontró el usuario
+                    gui.print("Usuario con ID " + opcion + " no encontrado, volviendo al Submenu");
+                }
+            } catch (NumberFormatException e) {
+                gui.print("Error: Tiene que digitar un ID, volviendo al Submenu");
             }
         }
     }
@@ -194,26 +198,28 @@ public class Clientes {
         if (mostrarInactivos().isEmpty()) {
             gui.print("No existen usuarios Inactivos, volviendo al SubMenu");
         } else {
-            gui.print("Por favor digite el usuario que desea inactivar\n"
-                    + mostrarInactivos());
-            byte opcion = Byte.parseByte(gui.input("Seleccione el ID: "));
-            byte i;
-            for (i = 0; i < listaClientes.length; i++) {
-                if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
-                    if (listaClientes[i].isEstado()) {
-                        gui.print("Error: El usuario seleccionado ya esta activado, volviendo al Submenu");
-                        break;
-                    } else {
-                        listaClientes[i].setEstado(true);
-                        gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Activado con éxito");
-                        break; // Sale del bucle ya que se encontró y modificó el usuario
+            byte i = 0;
+            try {
+                int opcion = Integer.parseInt(gui.input("Seleccione el ID del usuario que desea inactivar\n"
+                        + mostrarInactivos()));
+                for (i = 0; i < listaClientes.length; i++) {
+                    if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
+                        if (listaClientes[i].isEstado()) {
+                            gui.print("Error: El usuario seleccionado ya esta activado, volviendo al Submenu");
+                            break;
+                        } else {
+                            listaClientes[i].setEstado(true);
+                            gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Activado con éxito");
+                            break; // Sale del bucle ya que se encontró y modificó el usuario
+                        }
                     }
                 }
-            }
-
-            if (i == listaClientes.length) {
-                // Si el bucle se ejecutó completamente y no se encontró el usuario
-                gui.print("Usuario con ID " + opcion + " no encontrado");
+                if (i == listaClientes.length) {
+                    // Si el bucle se ejecutó completamente y no se encontró el usuario
+                    gui.print("Usuario con ID " + opcion + " no encontrado");
+                }
+            } catch (NumberFormatException e) {
+                gui.print("Error: Tiene que digitar un ID, volviendo al Submenu");
             }
         }
     }
