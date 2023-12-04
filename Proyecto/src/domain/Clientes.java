@@ -1,6 +1,5 @@
 package domain;
 
-import data.Logic;
 import presentation.Gui;
 
 public class Clientes {
