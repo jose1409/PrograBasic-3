@@ -1,5 +1,7 @@
 package domain;
 
+import bussiness.Facturacion;
+import javax.swing.JOptionPane;
 import presentation.Gui;
 
 public class Clientes {
@@ -98,7 +100,7 @@ public class Clientes {
                     listaClientes[i] = c;
                     i = listaClientes.length;
                 } else {
-                    gui.print("Error: Tiene que digitar todos los datos solicitados "
+                    gui.errorMesage("Tiene que digitar todos los datos solicitados "
                             + "y no dejar datos en blanco, intentelo mas tarde");
                     i = listaClientes.length;
                 }
@@ -126,7 +128,7 @@ public class Clientes {
             }
         }
         if (s.isEmpty()) {
-            gui.print("No existen Usuarios Activos actualmente");
+            gui.errorMesage("No existen Usuarios Activos actualmente");
         } else {
             gui.print(s);
         }
@@ -163,7 +165,7 @@ public class Clientes {
     //Funcion Inactivar, sirve para inactivar usuarios 
     public void inactivar() {
         if (mostrarActivos().isEmpty()) {
-            gui.print("No existen usuarios Activos, volviendo al SubMenu");
+            gui.errorMesage("No existen usuarios Activos, volviendo al SubMenu");
         } else {
             byte i;
             try {
@@ -177,17 +179,17 @@ public class Clientes {
                         } else {
                             listaClientes[i].setEstado(false);
                             gui.print("Usuario #" + listaClientes[i].getId() + " ha sido Inactivado con éxito");
-                            break; // Sale del bucle ya que se encontró y modificó el usuario
+                            break; 
                         }
                     }
                 }
 
                 if (i == listaClientes.length) {
                     // Si el bucle se ejecutó completamente y no se encontró el usuario
-                    gui.print("Usuario con ID " + opcion + " no encontrado, volviendo al Submenu");
+                    gui.errorMesage("Usuario con ID " + opcion + " no encontrado, volviendo al Submenu");
                 }
             } catch (NumberFormatException e) {
-                gui.print("Error: Tiene que digitar un ID, volviendo al Submenu");
+                gui.errorMesage("Error: Tiene que digitar un ID, volviendo al Submenu");
             }
         }
     }
@@ -195,7 +197,7 @@ public class Clientes {
     //Funcion activar, los usuarios que se hayan inactivado se podran volver a activar con esta funcion
     public void activar() {
         if (mostrarInactivos().isEmpty()) {
-            gui.print("No existen usuarios Inactivos, volviendo al SubMenu");
+            gui.errorMesage("No existen usuarios Inactivos, volviendo al SubMenu");
         } else {
             byte i = 0;
             try {
@@ -215,11 +217,51 @@ public class Clientes {
                 }
                 if (i == listaClientes.length) {
                     // Si el bucle se ejecutó completamente y no se encontró el usuario
-                    gui.print("Usuario con ID " + opcion + " no encontrado");
+                    gui.errorMesage("Usuario con ID " + opcion + " no encontrado");
                 }
             } catch (NumberFormatException e) {
-                gui.print("Error: Tiene que digitar un ID, volviendo al Submenu");
+                gui.errorMesage("Tiene que digitar un ID, volviendo al Submenu");
             }
         }
+    }
+    
+    public Clientes comboBox(){
+        Clientes clienteTemp= null;
+        String opciones[] = new String[contarNulos()];
+        llenaNombres(opciones);
+        String op = (String) JOptionPane.showInputDialog(null, "Eliga el Cliente: ", "Clientes", JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
+        clienteTemp=buscarCliente(op);
+        return clienteTemp;
+    }
+    
+    public void llenaNombres(String... datos) {
+        for (int i = 0; i < listaClientes.length; i++) {
+            if (listaClientes[i] != null) {
+                datos[i] = listaClientes[i].nombre;
+            }
+        }
+    }
+
+    public int contarNulos() {
+        int cont = 0;
+        for (int i = 0; i < listaClientes.length; i++) {
+            if (listaClientes[i] != null) {
+                cont++;
+            }
+        }
+        return cont;
+    }
+    
+    public Clientes buscarCliente(String nombre) {
+        Clientes cliente = null;
+        for (int i = 0; i < listaClientes.length; i++) {
+            if (listaClientes[i] != null) {
+                if (listaClientes[i].getNombre().equals(nombre)) {
+                    cliente = listaClientes[i];
+                    i = listaClientes.length;
+                }
+            }
+        }
+        return cliente;
     }
 }
