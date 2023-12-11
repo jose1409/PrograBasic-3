@@ -174,7 +174,7 @@ public class Clientes {
                 for (i = 0; i < listaClientes.length; i++) {
                     if (listaClientes[i] != null && opcion == listaClientes[i].getId()) {
                         if (listaClientes[i].isEstado() == false) {
-                            gui.print("Error: El usuario ya esta Inactivo, volviendo al Submenu");
+                            gui.errorMesage("El usuario ya esta Inactivo, volviendo al Submenu");
                             break;
                         } else {
                             listaClientes[i].setEstado(false);

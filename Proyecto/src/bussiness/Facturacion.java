@@ -91,14 +91,7 @@ public class Facturacion {
         this.estado = estado;
     }
 
-    public Facturacion[] getListaFacturas() {
-        return listaFacturas;
-    }
-
-    public void setListaFacturas(Facturacion[] listaFacturas) {
-        this.listaFacturas = listaFacturas;
-    }
-
+    //Funcion que sirve para la creacion de facturas
     public void crearFactura() {
         Clientes clienteTemp = null;
         Empleados empleadoTemp = null;
@@ -141,13 +134,47 @@ public class Facturacion {
         }
     }
 
+    public String mostrarActivos() {
+        String s = "";
+        for (int i = 0; i < listaFacturas.length; i++) {
+            if (listaFacturas[i] != null && listaFacturas[i].isEstado() == false) {
+                s += "No Factura: " + listaFacturas[i].getCodigo()
+                        + "\nFacturado por: " + listaFacturas[i].getEmpleado().getNombre() + " " + listaFacturas[i].getEmpleado().getApellidos()
+                        + "\nFecha: " + listaFacturas[i].getFecha()
+                        + "\nAtracciones:\n" + atraccioncontar()
+                        + "\nA nombre de: " + listaFacturas[i].getCliente().getNombre() + " " + listaFacturas[i].getCliente().getApellido()
+                        + "\nPrecio a pagar: " + listaFacturas[i].getPrecioTotal() + "\n";
+            }
+        }
+        return s;
+    }
+
     public void anularFactura() {
-        byte i;
-        try {
-            int opcion = Integer.parseInt(gui.input("Seleccion el ID del usuario que desea activar\n"
-                    + "hola"));
-        }catch (NumberFormatException e) {
-            gui.errorMesage("Tiene que digitar un ID, volviendo al Submenu");
+        if (mostrarActivos().isEmpty()) {
+            gui.errorMesage("No existen facturas activas, volviendo al Submenu");
+        } else {
+            try {
+                byte i;
+                int opcion = Integer.parseInt(gui.input("Seleccion el ID de la factura que desea inactivar\n"
+                        + mostrarActivos()));
+                for (i = 0; i < listaFacturas.length; i++) {
+                    if (listaFacturas[i] != null && opcion == listaFacturas[i].getCodigo()) {
+                        if (listaFacturas[i].isEstado() == true) {
+                            gui.errorMesage("La factura ya esta anulada, volviendo al Submenu");
+                            break;
+                        } else {
+                            listaFacturas[i].setEstado(true);
+                            gui.print("Factura No" + listaFacturas[i].getCodigo() + " ah sido anulada con exito");
+                            break;
+                        }
+                    }
+                }
+                if (i == listaFacturas.length) {
+                    gui.errorMesage("Factura con codigo " + opcion + " no encontrado, volviendo al Submenu");
+                }
+            } catch (NumberFormatException e) {
+                gui.errorMesage("Tiene que digitar un codigo, volviendo al Submenu");
+            }
         }
     }
 
@@ -189,19 +216,26 @@ public class Facturacion {
                         + "\nAtracciones:\n" + atraccioncontar()
                         + "\nA nombre de: " + listaFacturas[i].getCliente().getNombre() + " " + listaFacturas[i].getCliente().getApellido()
                         + "\nPrecio a pagar: " + listaFacturas[i].getPrecioTotal() + "\n";
+                if (listaFacturas[i].isEstado() == true) {
+                    s += "Factura Anulada\n\n";
+                }
             }
         }
-        gui.print(s);
+        if (s.isEmpty()) {
+            gui.errorMesage("No existen Facturas actualmente");
+        } else {
+            gui.print(s);
+        }
     }
 
     public String atraccioncontar() {
         String s = "";
-            for (int i = 0; i < atraccionesCompra.length; i++) {
-                // Verificar si la atracción actual no es null antes de acceder a sus métodos
-                if (atraccionesCompra[i] != null) {
-                    s += atraccionesCompra[i].getNombre() + " - $" + atraccionesCompra[i].getPrecio() + "\n";
-                }
+        for (int i = 0; i < atraccionesCompra.length; i++) {
+            // Verificar si la atracción actual no es null antes de acceder a sus métodos
+            if (atraccionesCompra[i] != null) {
+                s += atraccionesCompra[i].getNombre() + " - $" + atraccionesCompra[i].getPrecio() + "\n";
             }
+        }
         return s;
     }
 }

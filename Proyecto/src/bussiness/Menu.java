@@ -219,15 +219,12 @@ public class Menu {
                     case 2:
                         fa.mostrarFacturas();
                         break;
-                        
                     case 3:
-                        
+                        fa.anularFactura();
                         break;
-                        
                     case 4:
                         test = false;
                         break;
-                        
                     default:
                         gui.print("Error: Digita un numero del 1 al 4");
 
